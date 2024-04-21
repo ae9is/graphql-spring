@@ -19,6 +19,34 @@ services:
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
       - ./data/export:/export
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U postgres -d ${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    networks:
+      - net
+  api:
+    depends_on:
+      db:
+        condition: service_healthy
+    image: graphql-spring/api:latest
+    container_name: graphql-spring-api
+    ports:
+      - "4000:8080"
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: test
+    networks:
+      - net
 
 volumes:
   postgres:
+
+networks:
+  net:
+    driver: bridge

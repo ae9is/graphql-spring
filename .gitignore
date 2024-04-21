@@ -41,3 +41,4 @@ data/export/*.csv
 data/postgres/
 
 *bak
+.env*

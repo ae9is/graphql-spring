@@ -4,9 +4,20 @@ The [Spring GraphQL server example](https://spring.io/guides/gs/graphql-server) 
 
 # Run
 
+To run the Spring api and Postgres database via Docker:
+
 ```bash
 direnv allow
+make build
+make docker-build-gradle
 docker compose up -d
+```
+
+Open http://localhost:4000/graphiql?path=/graphql
+
+You can also directly run the Spring api at the same time with:
+
+```bash
 make run
 ```
 
