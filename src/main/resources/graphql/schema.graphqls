@@ -1,16 +1,22 @@
+# See GraphQLConfig.java for wiring for scalars
+scalar Long
+scalar JSON
+scalar DateTime
+
 type Query {
-    bookById(id: ID): Book
+  bookById(id: Long): Book
 }
 
 type Book {
-    id: ID
-    name: String
-    pageCount: Int
-    author: Author
+  id: Long
+  name: String
+  pageCount: Int
+  details: JSON
+  author: Author
 }
 
 type Author {
-    id: ID
-    firstName: String
-    lastName: String
+  id: Long
+  firstName: String
+  lastName: String
 }

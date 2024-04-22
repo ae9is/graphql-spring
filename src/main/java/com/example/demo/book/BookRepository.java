@@ -1,6 +1,5 @@
 package com.example.demo.book;
 
-import java.math.BigInteger;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,13 @@ public class BookRepository {
   @Autowired
   JdbcClient client;
 
-  public Book getById(BigInteger id) {
+  public Book getById(Long id) {
     Optional<Book> res = client.sql("""
           SELECT
             book.book_id as id,
             book.title as name,
             book.numpages as pageCount,
+            book.details as details,
             author.author_id as authorId
           FROM
             book,
@@ -31,7 +31,8 @@ public class BookRepository {
           LIMIT 1
         """)
         .param("book_id", id)
-        .query(Book.class)
+        //.query(Book.class)
+        .query(BookRowMapper.getInstance())
         .optional();
     return res.isPresent() ? res.get() : null;
   }

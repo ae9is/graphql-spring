@@ -1,6 +1,5 @@
 package com.example.demo.author;
 
-import java.math.BigInteger;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ public class AuthorRepository {
   @Autowired
   JdbcClient client;
 
-  public Author getById(BigInteger id) {
+  public Author getById(Long id) {
     Optional<Author> res = client.sql("""
           SELECT
             author.author_id as id,
